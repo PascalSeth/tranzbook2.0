@@ -1,4 +1,3 @@
-"use client"
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -7,7 +6,6 @@ import { ProductToggle } from './Producttoggle'
 import { ResourcesToggle } from './ResourcesToggle'
 import {RegisterLink, LoginLink, LogoutLink} from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import { AccountToggle } from './AccountToggle'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,9 +13,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-type Props = {}
 
-export default async  function Navbar({}: Props) {
+export async function Navbar() {
   const {getUser}= getKindeServerSession()
   const user= await getUser()
   return (

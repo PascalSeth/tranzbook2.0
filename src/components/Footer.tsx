@@ -3,7 +3,7 @@ import React from 'react'
 
 type Props = {}
 
-export default function Footer({}: Props) {
+export function Footer({}: Props) {
   return (
 <footer className="bg-white">
   <div className="mx-auto max-w-screen-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
