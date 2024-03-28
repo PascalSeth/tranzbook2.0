@@ -28,7 +28,7 @@ export default function Carousel({}: Props) {
   </h2>
 
   <p className="mt-4 text-gray-600">
-    Are you passionate about all things transportation? Whether you're a seasoned commuter, a thrill-seeking adventurer, or just someone fascinated by the intricacies of travel, you've come to the right place. Our blog is your go-to destination for insightful articles, exciting updates, and valuable tips covering everything from public transit to personal mobility solutions.
+    Are you passionate about all things transportation? Whether you&apos;re a seasoned commuter, a thrill-seeking adventurer, or just someone fascinated by the intricacies of travel, you&apos;ve come to the right place. Our blog is your go-to destination for insightful articles, exciting updates, and valuable tips covering everything from public transit to personal mobility solutions.
   </p>
 
   <a

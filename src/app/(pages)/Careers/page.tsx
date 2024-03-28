@@ -30,8 +30,8 @@ export default function page({}: Props) {
             </p>
   
             <p>
-              Whether you're fascinated by the logistics of moving cargo across continents or enjoy
-              the hustle and bustle of urban bus transportation, there's a career path for you. From
+              Whether you&apos;re fascinated by the logistics of moving cargo across continents or enjoy
+              the hustle and bustle of urban bus transportation, there&apos;s a career path for you. From
               bus drivers to logistics coordinators, explore the diverse roles available in this
               dynamic industry.
             </p>
