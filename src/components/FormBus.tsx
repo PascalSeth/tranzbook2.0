@@ -1,3 +1,4 @@
+'use client'
 import { PanoramaFishEyeRounded } from '@mui/icons-material'
 import { SearchIcon } from 'lucide-react'
 import React from 'react'

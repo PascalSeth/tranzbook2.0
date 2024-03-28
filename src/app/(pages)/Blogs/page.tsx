@@ -1,5 +1,5 @@
+"use client"
 import Carousels from '@/components/Carousel';
-import Image from 'next/image';
 import React from 'react';
 
 interface Blog {
