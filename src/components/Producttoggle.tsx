@@ -20,9 +20,9 @@ export function ProductToggle() {
          <h1 className="hover:cursor-pointer"> Product</h1>
       
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="space-y-2 z-[999] bg-white">
+      <DropdownMenuContent align="end" className="space-y-2 z-[999] text-black bg-white">
       <DropdownMenuItem className="rounded-[8px] hover:cursor-pointer  items-center flex font-semibold" >
-      <Link href='/Blogs' className="rounded-[8px] hover:bg-orange-200 p-2 hover:text-white w-full hover:cursor-pointer  items-center flex font-semibold">
+      <Link href='/Blogs' className="rounded-[8px] hover:bg-orange-200  p-2 hover:text-white w-full hover:cursor-pointer  items-center flex font-semibold">
            <Agriculture className="mr-2"/>
           Agro-Prefinancing  
         </Link>

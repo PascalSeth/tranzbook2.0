@@ -21,7 +21,7 @@ export function ResourcesToggle() {
          <h1 className=" hover:cursor-pointer"> Resources</h1>
       
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className=" z-[999] bg-white">
+      <DropdownMenuContent align="end" className=" z-[999] text-black bg-white">
       <DropdownMenuItem className="" >
         <Link href='/Blogs' className="rounded-[8px] hover:bg-orange-200 p-2 hover:text-white w-full hover:cursor-pointer  items-center flex font-semibold">
            <CampaignOutlined className="mr-2"/>

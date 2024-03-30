@@ -44,7 +44,7 @@ export async function Navbar() {
           alt=""/>
       
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="z-[999] bg-white">
+      <DropdownMenuContent align="end" className="z-[999] text-black bg-white">
       <DropdownMenuItem className="rounded-[8px] hover:cursor-pointer  items-center flex font-semibold" >
       <Link href='/my-journeys' className="rounded-[8px] hover:bg-orange-200 p-2 hover:text-white w-full hover:cursor-pointer  items-center flex font-semibold">
           My Journeys
