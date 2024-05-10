@@ -30,13 +30,13 @@ function MyApp() {
     ];
 
     return (
-        <div className="bg-gray-50 py-20 flex flex-col items-center justify-center">
+        <div className="bg-gray-50 py-5 flex flex-col items-center justify-center">
             <div className="xl:w-1/2 w-11/12">
                 <h1 role="heading" tabIndex={0} className="text-6xl font-bold 2xl:leading-10 leading-0 text-center text-gray-800">
                     Touching hundreds of lives
                 </h1>
                 <h2 role="contentinfo" tabIndex={0} className="text-base leading-normal text-center text-gray-600 mt-5">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text Lorem Ipsum is simply dummy text of the printing
+                Join us on a journey where every image tells a story, and every story has the power to transcend boundaries and connect hearts. Welcome to TranzBook Gallery: where the beauty of the world meets the creativity of the human spirit.
                 </h2>
             </div>
             <div className="2xl:px-20 lg:px-12 px-4 flex flex-wrap items-start mt-4">
