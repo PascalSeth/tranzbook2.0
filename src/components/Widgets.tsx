@@ -1,9 +1,10 @@
-'use client'
-import React from 'react'
+import React from 'react';
 import DirectionsBusFilledOutlinedIcon from '@mui/icons-material/DirectionsBusFilledOutlined';
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import RingVolumeOutlinedIcon from '@mui/icons-material/RingVolumeOutlined';
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes';
 
 interface Widget {
   icon: React.FC; // Type for MUI icon component
@@ -25,7 +26,7 @@ const widgets: Widget[] = [
   {
     icon: CompareArrowsIcon,
     title: 'To and from Ghana?',
-    subtitle: 'Find cars to Nigeria, Togo, Benin, Burkina Faso, Côte d\'Ivoire, Mali etc',
+    subtitle: "Find cars to Nigeria, Togo, Benin, Burkina Faso, Côte d'Ivoire, Mali etc",
   },
   {
     icon: RingVolumeOutlinedIcon,
@@ -35,6 +36,8 @@ const widgets: Widget[] = [
 ];
 
 function Widgets() {
+  const { theme } = useTheme();
+
   return (
     <motion.div
       initial={{ x: -550 }}
@@ -42,17 +45,18 @@ function Widgets() {
       transition={{ duration: 2.5 }}
       className="flex items-center -mt-12 mb-[5vh] justify-center w-full"
     >
-      <motion.div className="flex items-center max-md:flex-col ">
+      <motion.div className="grid grid-cols-4 max-lg:grid-cols-2 gap-10 items-center max-md:grid-cols-1">
         {widgets.map((widget) => (
-          <div key={widget.title} className="flex flex-col h-[32vh] bg-white rounded-xl p-[1vh] m-[1vh] w-[20vw] 
-max-md:w-full max-md:h-[26vh] max-lg:w-fit  ">
-            <div className=" text-white bg-[#48A0fF] w-fit max-lg:p-[1.3vw] rounded-2xl p-[0.9vw]
-">
-              <widget.icon  />
+          <div
+            key={widget.title}
+            className={`flex shadow-[#48a0ff5c] shadow-lg flex-col h-[32vh]  ${theme === 'dark' ? 'bg-slate-700':'bg-white'} rounded-xl p-[1vh] m-[1vh] w-[20vw] max-md:w-full max-lg:max-h-[220px] max-lg:w-full`}
+          >
+            <div className={`text-white bg-[#48A0fF] w-fit max-lg:p-[1.3vw] rounded-2xl p-[0.9vw] ${theme === 'dark' ? 'text-black' : ''}`}>
+              <widget.icon />
             </div>
             <div className="caption">
-              <h4 className=" p-[0.5vw] pt-[3vh] text-black font-semibold text-[16px]">{widget.title}</h4>
-              <h6 className="px-[0.5vw] text-[14px] text-[#475467]">{widget.subtitle}</h6>
+              <h4 className={`p-[0.5vw] pt-[3vh] ${theme === 'dark' ? 'text-white' : 'text-black'} font-semibold text-[16px]`}>{widget.title}</h4>
+              <h6 className={`px-[0.5vw] text-[14px] text-[#475467] ${theme === 'dark' ? 'text-gray-300' : ''}`}>{widget.subtitle}</h6>
             </div>
           </div>
         ))}

@@ -12,20 +12,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { MenuSheet } from './MenuToggle'
 
 
 export async function Navbar() {
   const {getUser}= getKindeServerSession()
   const user= await getUser()
   return (
-    <div className='flex sticky bottom-0 top-0 left-0 right-0   z-[99] p-[1.6vh] w-screen overflow-hidden  bg-[#DEF5FB] items-center'>
+    <div className='flex sticky bottom-0 top-0 left-0 right-0   z-[99] p-[1.6vh] w-full overflow-x-hidden  bg-[#DEF5FB] items-center'>
     <div className='flex w-[100%] justify-between items-center max-w-6xl mx-auto '>
         <div className='logoContainer items-center flex mr-5 space-x-3'>
             <Link href='/'>
             <Image src='/pictures/logoNav.png' width={100} height={100} alt=''/>
             </Link>
             <div className='menuMiddle max-lg:hidden flex text-blue-500 items-center text-[14px] font-medium space-x-3 '>
-            <Link href='About Us'>About Us</Link>
+            <Link href='/About'>About Us</Link>
             <ProductToggle/>  
             <ResourcesToggle/>
             </div>
@@ -62,11 +63,18 @@ export async function Navbar() {
               )
               :(
               <>
-              <RegisterLink className='px-2 py-0.5 rounded-[8px] w-20 text-center text-white font-semibold hover:bg-[#48a0ff60] bg-[#48A0ff]'>Sign up </RegisterLink>
+       <div className='max-lg:hidden space-x-2 flex items-center'>
+         <RegisterLink className='px-2 py-0.5 rounded-[8px] w-20 text-center text-white font-semibold hover:bg-[#48a0ff60] bg-[#48A0ff]'>Sign up </RegisterLink>
             <LoginLink className='px-2 py-0.5 rounded-[8px] w-20 text-center text-white font-semibold hover:bg-gray-300 bg-gray-400'>Login</LoginLink> 
+          
+        </div>      
+        <div className='lg:hidden'>
+                    <MenuSheet/>
+
+          </div> 
               </>)
             }</div>
-                      <ModeToggle/>
+                      {/* <ModeToggle/> */}
  </div>
 
         </div>

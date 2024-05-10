@@ -34,9 +34,7 @@ body {
 .hlinks{
   @apply p-1.5 rounded-xl w-16 font-semibold
 }
-.facts{
-  @apply flex flex-col 
-}
+
 
 .facts>h5{
   @apply text-[2vh] font-medium pb-[5vh]
@@ -45,10 +43,20 @@ body {
   @apply text-[2.5vh] flex items-center text-[#48a0ff] font-semibold
 }
 .check{
-  @apply fill-cyan-600
+  @apply fill-cyan-600 text-[2.2vh] mr-2
 }
-.owners{
-  @apply flex mt-[5vh] max-md:flex-col-reverse max-md:items-center max-lg:flex-col-reverse max-lg:items-center
+.left-text{
+  @apply h-fit
+}
+
+.left-text>h2{
+  @apply text-[2.5vh] flex items-center text-[#48a0ff] font-semibold 
+}
+.left-text>h5{
+  @apply text-[2vh] font-medium pb-[5vh] 
+}
+.left-text>h4{
+  @apply text-[3.4vh] font-semibold pb-[3vh] max-md:text-[2.7vh]
 }
 .righttxt>h2{
   @apply text-[2.5vh] flex items-center text-[#48a0ff] font-semibold
@@ -59,7 +67,8 @@ body {
 .righttxt>h4{
   @apply text-[3.4vh] font-semibold pb-[3vh] max-md:text-[2.7vh]
 }
-fq{
+
+.fq{
   @apply bg-[#0066d4]
   justify-center
 }
@@ -69,8 +78,18 @@ fq{
 .wrd{
   @apply w-[50vw] p-[2vh] max-md:w-full
 }
+
+.wrd>h4{
+  @apply font-semibold 
+}
+.minus{
+  @apply hover:cursor-pointer
+ }
+ .plus{
+  @apply hover:cursor-pointer
+ }
 .teamcon{
-  @apply flex flex-col items-center mt-[1vh] bg-[#2f90fa] p-[3vh] rounded-sm 
+  @apply flex flex-col w-full items-center mt-[1vh] bg-[#2f90fa] p-[3vh] rounded-sm 
  }
  .infor{
   @apply flex items-center flex-col text-center
@@ -156,4 +175,9 @@ fq{
 @apply flex text-white hover:cursor-pointer items-center bg-[#48A0ff] w-fit px-2 rounded-r-xl
  max-lg:w-full max-lg:text-center max-lg:p-[1vh]
  max-lg:justify-center max-lg:rounded-b-xl max-lg:rounded-tr-none }
-
+.imagepic{
+  @apply w-full h-full max-h-[520px] max-lg:max-h-[520px] rounded-t-[2pc]
+}
+.whyImage{
+  @apply h-full w-full object-center rounded-t-[2pc]
+}

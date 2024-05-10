@@ -6,14 +6,14 @@ type Props = {}
 export default function Carousel({}: Props) {
   return (
 <section>
-  <div className="mx-auto max-w-screen-2xl px-4  sm:px-6 lg:px-8">
+  <div className="mx-auto max-w-full-2xl px-4  sm:px-6 lg:px-8">
     <div className="grid grid-cols-1 lg:h-screen lg:grid-cols-2">
       <div className="relative z-10 lg:py-16">
         <div className="relative h-64 sm:h-80 lg:h-full">
           <img
             alt=""
             src="/blog.png"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full rounded-[1pc] object-cover"
           />
         </div>
       </div>

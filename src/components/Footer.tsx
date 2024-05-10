@@ -1,14 +1,18 @@
 "use client"
+
+import { useTheme } from 'next-themes';
 import React from 'react'
+
 
 type Props = {}
 
 export function Footer({}: Props) {
+  const { theme } = useTheme();
   return (
-<footer className="bg-white">
-  <div className="mx-auto max-w-screen-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
+    <footer className={`${theme === 'dark' ? 'bg-black' : 'bg-white'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+  <div className="mx-auto max-w-full-xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
     <div className="mx-auto max-w-md">
-      <strong className="block text-center text-xl font-bold text-gray-900 sm:text-3xl">
+      <strong className={`block text-center text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} sm:text-3xl`}>
         Want us to email you with the latest blockbuster news?
       </strong>
 
@@ -38,7 +42,7 @@ export function Footer({}: Props) {
 
         <div className="mt-6 flex justify-center gap-4 lg:justify-start">
           <a
-            className="text-gray-700 transition hover:text-gray-700/75"
+            className=" transition "
             href="#"
             target="_blank"
             rel="noreferrer"
@@ -55,7 +59,7 @@ export function Footer({}: Props) {
           </a>
 
           <a
-            className="text-gray-700 transition hover:text-gray-700/75"
+            className=" transition "
             href="#"
             target="_blank"
             rel="noreferrer"
@@ -72,7 +76,7 @@ export function Footer({}: Props) {
           </a>
 
           <a
-            className="text-gray-700 transition hover:text-gray-700/75"
+            className=" transition "
             href="#"
             target="_blank"
             rel="noreferrer"
@@ -94,27 +98,27 @@ export function Footer({}: Props) {
 
       <div className="grid grid-cols-1 gap-8 text-center lg:grid-cols-3 lg:text-left">
         <div>
-          <strong className="font-medium text-gray-900"> Services </strong>
+          <strong className="font-medium "> Services </strong>
 
           <ul className="mt-6 space-y-1">
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Marketing </a>
+              <a className=" transition " href="#"> Marketing </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+              <a className=" transition " href="#">
                 Graphic Design
               </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+              <a className=" transition " href="#">
                 App Development
               </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#">
+              <a className=" transition " href="#">
                 Web Development
               </a>
             </li>
@@ -122,41 +126,41 @@ export function Footer({}: Props) {
         </div>
 
         <div>
-          <strong className="font-medium text-gray-900"> About </strong>
+          <strong className="font-medium "> About </strong>
 
           <ul className="mt-6 space-y-1">
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> About </a>
+              <a className=" transition " href="#"> About </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Careers </a>
+              <a className=" transition " href="#"> Careers </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> History </a>
+              <a className=" transition " href="#"> History </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Our Team </a>
+              <a className=" transition " href="#"> Our Team </a>
             </li>
           </ul>
         </div>
 
         <div>
-          <strong className="font-medium text-gray-900"> Support </strong>
+          <strong className="font-medium "> Support </strong>
 
           <ul className="mt-6 space-y-1">
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> FAQs </a>
+              <a className=" transition " href="#"> FAQs </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Contact </a>
+              <a className=" transition " href="#"> Contact </a>
             </li>
 
             <li>
-              <a className="text-gray-700 transition hover:text-gray-700/75" href="#"> Live Chat </a>
+              <a className=" transition " href="#"> Live Chat </a>
             </li>
           </ul>
         </div>

@@ -4,7 +4,11 @@ import Cargo from '@/components/homeNavbuttons/Cargo';
 import React, { useState} from 'react';
 import Widgets from '../components/Widgets';
 import Why from '../components/Why';
+import { useTheme } from "next-themes"
+
 import Faq from '../components/Faq';
+import Partner from '@/components/Partner';
+import { PopularPlace } from '@/components/PopularPlaces';
 type Props = {}
 
 enum ButtonType {
@@ -13,14 +17,16 @@ enum ButtonType {
   }
 
 export default function UpperHome({}: Props) {
+  const {theme}=useTheme()
+
     const [activeButton, setActiveButton] = useState<ButtonType>(ButtonType.Bus);
 
     const handleButtonClick = (button: ButtonType) => {
       setActiveButton(button);
     };
   return (
-    <main className='flex flex-col w-screen h-full items-center '>
-      <div className='bg-[#DEF5FB] rounded-b-[2pc] pb-20 '>
+    <main className='flex flex-col w-full h-full items-center '>
+    <div className={`bg-[#DEF5FB] ${theme === 'dark'? 'bg-gray-900':''} w-full rounded-b-[2pc] pb-20`} >
         <div className='flex p-2 flex-col items-center'>
           <div className='flex'>
     <button
@@ -52,7 +58,13 @@ export default function UpperHome({}: Props) {
   </div>
   <div><Widgets/>
     <Why activeButton={activeButton}/>
-    <Faq/>
+     <PopularPlace />
+      <Partner/>
+  
+    <section id='Faq'>
+      <Faq/>
+    </section>
+    
 
   </div>
   </main>
