@@ -71,7 +71,7 @@ function IndexPage() {
                             <div className="md:w-1/2 lg:w-2/3 w-full lg:pl-20 md:pl-10 sm:pl-0 pl-0">
                                 <div className="py-2 text-color">
                                     <h1 className="text-2xl lg:text-4xl tracking-tighter md:leading-snug f-f-l font-black">Become a Cargo Truck Specialist</h1>
-                                    <h2 className="text-lg lg:text-xl leading-7 md:leading-10 f-f-r py-8">At Tranzbook, we're seeking cargo truck specialists who are passionate about logistics and have the skills to deliver goods safely and efficiently. Join our team and help drive our mission forward.</h2>
+                                    <h2 className="text-lg lg:text-xl leading-7 md:leading-10 f-f-r py-8">At Tranzbook, we&apos;re seeking cargo truck specialists who are passionate about logistics and have the skills to deliver goods safely and efficiently. Join our team and help drive our mission forward.</h2>
                                     <div className="flex items-center cursor-pointer pb-4 md:pb-0">
                                         <h3 className="f-f-r text-lg lg:text-2xl font-semibold underline text-indigo-700">Apply Now</h3>
                                         <div className="pl-2">
