@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+} */
+.hlinks{
+  @apply p-1.5 rounded-xl w-16 font-semibold
+}
+
+
+.facts>h5{
+  @apply text-[2vh] font-medium pb-[5vh]
+}
+.facts>h2{
+  @apply text-[2.5vh] flex items-center text-[#48a0ff] font-semibold
+}
+.check{
+  @apply fill-cyan-600 text-[2.2vh] mr-2
+}
+.left-text{
+  @apply h-fit
+}
+
+.left-text>h2{
+  @apply text-[2.5vh] flex items-center text-[#48a0ff] font-semibold 
+}
+.left-text>h5{
+  @apply text-[2vh] font-medium pb-[5vh] 
+}
+.left-text>h4{
+  @apply text-[3.4vh] font-semibold pb-[3vh] max-md:text-[2.7vh]
+}
+.righttxt>h2{
+  @apply text-[2.5vh] flex items-center text-[#48a0ff] font-semibold
+}
+.righttxt>h5{
+  @apply text-[2vh] font-medium pb-[5vh] 
+}
+.righttxt>h4{
+  @apply text-[3.4vh] font-semibold pb-[3vh] max-md:text-[2.7vh]
+}
+
+.fq{
+  @apply bg-[#0066d4]
+  justify-center
+}
+.wrdcontainer{
+  @apply flex max-md:w-full max-md:text-center max-md:text-[1.7vh] border-white border-t-gray-300 items-center  border-t 
+}
+.wrd{
+  @apply w-[50vw] p-[2vh] max-md:w-full
+}
+
+.wrd>h4{
+  @apply font-semibold 
+}
+.minus{
+  @apply hover:cursor-pointer
+ }
+ .plus{
+  @apply hover:cursor-pointer
+ }
+.teamcon{
+  @apply flex flex-col w-full items-center mt-[1vh] bg-[#2f90fa] p-[3vh] rounded-sm 
+ }
+ .infor{
+  @apply flex items-center flex-col text-center
+ }
+ .infor>h5{
+  @apply text-[#d9ebff] text-[1.6vh] pb-[2vh] font-medium
+ }
+ .infor>h4{
+  @apply text-[2.3vh] font-medium
+ }
+ .teamcon>button{
+  @apply p-[1.6vh] bg-[#48a0ff] border-none rounded-md
+ }
+ .information{
+  @apply flex items-center border shadow-lg rounded-lg p-[0.5vh] mb-[1vh] border-transparent
+ }
+ .cargotxt{
+  @apply items-center p-[0.7vh] flex
+ }
+ .cargotxtd{
+  @apply flex items-center justify-center
+ }
+ .cargotxtd>h6{
+  @apply mr-[9.3vw]
+ }
+ .inputfield>input{
+  @apply border-none w-full outline-none mb-[1vh] border-transparent bg-none pb-[12vh] shadow-lg rounded-lg
+ }
+ .cargotxt>input{
+  @apply border-none outline-none bg-none
+ }
+ 
+ .h55{
+  @apply text-[2vh] p-[3vh] max-lg:p-[1vh] font-normal text-[#475467]
+ }
+ .rightloca>h6{
+  @apply items-center text-[3vh] pt-[4vh] text-[#48a0ff]
+ }
+ .sectiontop>h2{
+  @apply text-[2vh] flex items-center text-[#48a0ff]
+ }
+ .sectiontop>h3{
+  @apply text-[1.4vh] flex items-center text-[#fdb022]
+ }
+ .sectionbottom>h2{
+@apply text-[2vh] flex items-center text-[#48A0FF]
+ }
+ .sectionbottom>h3{
+@apply text-[1.4vh] flex items-center text-[#fdb022] 
+}
+.ic{
+  @apply h-[2vh]
+}
+
+.columncontainer{
+  @apply flex flex-col w-[12vw] 
+}
+.float-Icon{
+  @apply mr-[1vw] items-center text-[#48A0ff]
+}
+.word{
+@apply text-[#48A0ff] opacity-[0.3] text-[1.4vh] font-bold
+}
+.calform-space{
+  @apply flex overflow-hidden w-[16vw]   max-lg:my-2 max-lg:rounded-lg max-lg:mr-2 border-r-[#48A0ff] border-r items-center p-[0.4vh] hover:bg-[#cccccc2a] max-lg:border max-lg:w-[40vw] max-lg:border-[orange]
+}
+.calform-space2{
+  @apply flex overflow-hidden w-[16vw] max-lg:my-2 max-lg:rounded-lg border-r-[#48A0ff] border-r items-center p-[0.4vh] hover:bg-[#cccccc2a]  max-lg:border  max-lg:border-[orange]  max-lg:w-[40vw]
+}
+.form-space{
+  @apply flex w-[16vw] max-lg:my-2 max-lg:rounded-lg border-r  border-r-[#48A0ff] items-center hover:bg-[#cccccc2a]  max-lg:border  max-lg:border-[orange] max-lg:w-[80vw]
+}
+.form-spacex{
+  @apply flex w-[16vw] max-lg:my-2 max-lg:rounded-lg  border-r-[#48A0ff] items-center hover:bg-[#cccccc2a] max-lg:w-[80vw] max-lg:border  max-lg:border-[orange]
+}
+.calcontainer{
+@apply flex
+}
+.inputField>input{
+@apply border-none outline-none bg-transparent
+}
+.search-button{
+@apply flex text-white hover:cursor-pointer items-center bg-[#48A0ff] w-fit px-2 rounded-r-xl
+ max-lg:w-full max-lg:text-center max-lg:p-[1vh]
+ max-lg:justify-center max-lg:rounded-b-xl max-lg:rounded-tr-none }
+.imagepic{
+  @apply w-full h-full max-h-[520px] max-lg:max-h-[520px] rounded-t-[2pc]
+}
+.whyImage{
+  @apply h-full w-full object-center rounded-t-[2pc]
+}
+
+

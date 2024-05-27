@@ -1,63 +1,118 @@
-'use client'
-import { PanoramaFishEyeRounded } from '@mui/icons-material'
-import { SearchIcon } from 'lucide-react'
-import React from 'react'
+'use client';
 
-type Props = {}
+import React, { useState } from 'react';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { PanoramaFishEyeRounded } from '@mui/icons-material';
+import { SearchIcon } from 'lucide-react';
+import { ComboboxForm } from './ComboBox';
+import { useRouter } from 'next/navigation';
+import { CalendarForm } from './Calendar';
 
-export default function formBus({}: Props) {
+export default function FormBus() {
+  const [fromLocation, setFromLocation] = useState('');
+  const [toLocation, setToLocation] = useState('');
+  const [date, setDate] = useState<Date | null>(null);
+  const [returnDate, setReturnDate] = useState<Date | null>(null);
+  const [ticketQuantity, setTicketQuantity] = useState(0);
+
+  const router= useRouter()
+
+  const handleFromLocationSelect = (location: string) => {
+    setFromLocation(location);
+    if (location === toLocation) {
+      setToLocation('');
+    }
+  };
+
+  const handleToLocationSelect = (location: string) => {
+    setToLocation(location);
+    if (location === fromLocation) {
+      setFromLocation('');
+    }
+  };
+
+  const handleDateChange = (selectedDate: Date | null) => {
+    setDate(selectedDate);
+    if (selectedDate && selectedDate.getTime() === returnDate?.getTime()) {
+      setReturnDate(null);
+    }
+  };
+
+  const handleReturnDateChange = (selectedReturnDate: Date | null) => {
+    setReturnDate(selectedReturnDate);
+  };
+
   return (
-    <div className='flex max-lg:flex-col p-5 justify-center w-full'>
-      <form className='flex items-center border-[2px] rounded-l-xl max-lg:flex-col 
-       border-[#fdb022] border-r-0 max-lg:border-r max-lg:rounded-t-xl max-lg:rounded-bl-none '>
-        <div className='flex w-[16vw] rounded-l-xl max-lg:rounded-t-xl  bg-white max-lg:w-full border-b max-lg:border-b-[#48A0ff] items-center max-lg:border-r-0 border-r p-0.5 h-fit border-r-[#48A0ff]'>
-          <PanoramaFishEyeRounded className='text-blue-500 text-[20px] mr-2' />
-          <div className='flex flex-col'> 
-            <label className='text-[#48A0ff] font-semibold text-[10px]'>FROM</label>
-            <input placeholder='ORIGIN' className='text-[16px] border-none outline-none bg-transparent w-[12vw] max-lg:w-full'/>
+    <div className="grid max-lg:grid-cols-1 border-[#fdb022] my-5 max-lg:min-w-[700px] max-md:min-w-96 max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2   grid-cols-[1fr_auto] grid-rows-1 justify-items-center justify-center items-start ">
+      <form className="grid grid-cols-5 max-lg:grid-cols-2 ">
+        <div className="flex items-center lg:rounded-l-[1pc]  max-lg:rounded-tl-[1pc] bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+          <PanoramaFishEyeRounded className="text-blue-500 text-xl mr-2" />
+          <div className="flex text-gray-400 flex-col">
+            <label className="text-[#48A0ff] font-semibold text-xs">FROM</label>
+            <ComboboxForm
+              onLocationSelect={handleFromLocationSelect}
+              disabledOptions={[toLocation]}
+              locationType="FROM" 
+            />
           </div>
         </div>
 
-        <div className='flex w-[16vw] bg-white max-lg:w-full border-b max-lg:border-b-[#48A0ff] items-center max-lg:border-r-0 border-r p-0.5 h-fit border-r-[#48A0ff]'>
-          <PanoramaFishEyeRounded className='text-blue-500 text-[20px] mr-2' />
-          <div className='flex flex-col'>
-            <label className='text-[#74afef] font-semibold text-[10px]'>TO</label>
-            <input placeholder='DESTINATION' className='border-none outline-none bg-transparent w-[12vw] max-lg:w-full'/>
+        <div className="flex max-lg:rounded-tr-[1pc] items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+          <LocationOnIcon className="text-blue-500 text-xl mr-2" />
+          <div className="flex text-gray-400 flex-col">
+            <label className="text-[#74afef] font-semibold text-xs">TO</label>
+            <ComboboxForm
+              onLocationSelect={handleToLocationSelect}
+              disabledOptions={[fromLocation]}
+              locationType="TO"
+            />
+          </div>
+        </div>
+        
+        <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+          <CalendarMonthIcon className="text-blue-500 text-xl mr-2" />
+          <div className="flex text-gray-400 flex-col">
+            <label className="text-[#48A0ff] font-semibold text-xs">DATE</label>
+            <CalendarForm onDateChange={handleDateChange} />
           </div>
         </div>
 
-        <div className='flex items-center max-md:flex-col'>
-        <div className='flex w-[16vw] bg-white max-lg:w-full border-b max-lg:border-b-[#48A0ff] items-center  border-r p-0.5 h-fit border-r-[#48A0ff]'>
-          <PanoramaFishEyeRounded className='text-blue-500 text-[20px] mr-2' />
-          <div className='flex flex-col'>
-            <label className='text-[#48A0ff] font-semibold text-[10px]'>DATE</label>
-            <input placeholder='' className='border-none outline-none bg-transparent w-[12vw] max-lg:w-full'/>
+        <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+          <CalendarTodayIcon className="text-blue-500 text-xl mr-2" />
+          <div className="flex text-gray-400 flex-col">
+            <label className="text-[#48A0ff] font-semibold text-xs">RETURN DATE</label>
+            <CalendarForm
+              onDateChange={handleReturnDateChange}
+              disabledDates={date ? [date] : []}
+            />
           </div>
         </div>
 
-        <div className='flex w-[16vw] bg-white max-lg:w-full border-b max-lg:border-b-[#48A0ff] items-center max-lg:border-r-0 border-r p-0.5 h-fit border-r-[#48A0ff]'>
-          <PanoramaFishEyeRounded className='text-blue-500 text-[20px] mr-2' />
-          <div className='flex flex-col'>
-            <label className='text-[#48A0ff] font-semibold text-[10px]'>RETURN DATE
-</label>
-            <input placeholder='' className='border-none outline-none bg-transparent w-[12vw] max-lg:w-full'/>
+        <div className="flex items-center max-lg:col-span-2 bg-white  max-lg:border-none  p-1">
+          <ConfirmationNumberIcon className="text-blue-500 text-xl mr-2" />
+          <div className="flex text-gray-400 flex-col">
+            <label className="text-[#48A0ff] font-semibold text-xs">TICKET QUANTITY</label>
+            <input
+              type="number"
+              min="0"
+              value={ticketQuantity}
+              onChange={(e) => setTicketQuantity(parseInt(e.target.value))}
+              placeholder="0"
+              className="border-none outline-none bg-transparent w-full"
+            />
           </div>
-        </div>
-        </div>
 
-        <div className='flex w-[16vw]  bg-white max-lg:w-full border-b items-center max-lg:border-r-0 border-r p-0.5 h-fit'>
-          <PanoramaFishEyeRounded className='text-blue-500 text-[20px] mr-2' />
-          <div className='flex flex-col'>
-            <label className='text-[#48A0ff] font-semibold text-[10px]'>TICKET QUANTITY</label>
-            <input placeholder='0' className='border-none outline-none bg-transparent w-[12vw] max-lg:w-full'/>
-          </div>
+          
         </div>
       </form>
-       
-      <button className='search-button'>
-            <SearchIcon/>
-            Search
-          </button>
+      <button className=" flex items-center w-full h-full rounded-r-[1pc] max-lg:rounded-none justify-center hover:bg-[#48a0ff81] bg-[#48A0ff] text-white border-none p-1 cursor-pointer">
+        <SearchIcon className="mr-2" />
+        Search
+      </button>
+
     </div>
-  )
+  );
 }

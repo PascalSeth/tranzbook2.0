@@ -3,31 +3,122 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  directUrl         = env("DIRECT_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id            String   @id @unique
-  email         String
-  firstName     String
-  lastName      String
-  profileImage  String?
+  id           String    @id @unique @default(uuid())
+  email        String    @unique
+  firstName    String
+  lastName     String
+  profileImage String?
+  bookings     Booking[]
 }
 
 model BusCompany {
-  id          String   @id @unique
-  name        String
-  buses       Bus[]    // Opposite relation field
+  id      String @id @unique @default(uuid())
+  name    String
+  email   String @unique
+  password String
+  logoUrl String?
+  buses   Bus[]
+  routes  Route[]
 }
 
 model Bus {
-  id              String   @id @unique
-  plateNumber     String
-  capacity        Int
-  busType         String
-  company         BusCompany  @relation(fields: [companyId], references: [id])
-  companyId       String
-     // Opposite relation field
+  id          String     @id @unique @default(uuid())
+  plateNumber String
+  capacity    Int
+  busType     String
+  company     BusCompany @relation(fields: [companyId], references: [id])
+  companyId   String
+  trips       Trip[]
+}
+
+model Location {
+  id         String   @id @unique @default(uuid())
+  name       String
+  routesFrom Route[]  @relation("routesFrom")
+  routesTo   Route[]  @relation("routesTo")
+  cargoRoutesFrom CargoRoute[] @relation("cargoRoutesFrom")
+  cargoRoutesTo   CargoRoute[] @relation("cargoRoutesTo")
+}
+
+model Route {
+  id             String     @id @unique @default(uuid())
+  startLocation  Location   @relation("routesFrom", fields: [startLocationId], references: [id])
+  startLocationId String
+  endLocation    Location   @relation("routesTo", fields: [endLocationId], references: [id])
+  endLocationId  String
+  duration       Int        // Duration in minutes
+  distance       Int        // Distance in kilometers
+  company        BusCompany @relation(fields: [companyId], references: [id])
+  companyId      String
+  trips          Trip[]
+}
+
+model Trip {
+  id       String   @id @unique @default(uuid())
+  date     DateTime
+  price    Float
+  bus      Bus      @relation(fields: [busId], references: [id])
+  busId    String
+  route    Route    @relation(fields: [routeId], references: [id])
+  routeId  String
+  bookings Booking[]
+}
+
+model Booking {
+  id         String   @id @unique @default(uuid())
+  date       DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  trip       Trip     @relation(fields: [tripId], references: [id])
+  tripId     String
+  seatNumber Int
+}
+
+model CargoCompany {
+  id      String @id @unique @default(uuid())
+  name    String
+  email   String @unique
+  password String
+  logoUrl String?
+  cargos  Cargo[]
+  routes  CargoRoute[]
+}
+
+model Cargo {
+  id            String       @id @unique @default(uuid())
+  trackingNumber String
+  weight        Float
+  description   String
+  company       CargoCompany @relation(fields: [companyId], references: [id])
+  companyId     String
+  trip          CargoTrip    @relation(fields: [tripId], references: [id])
+  tripId        String
+}
+
+model CargoRoute {
+  id             String       @id @unique @default(uuid())
+  startLocation  Location     @relation("cargoRoutesFrom", fields: [startLocationId], references: [id])
+  startLocationId String
+  endLocation    Location     @relation("cargoRoutesTo", fields: [endLocationId], references: [id])
+  endLocationId  String
+  duration       Int          // Duration in minutes
+  distance       Int          // Distance in kilometers
+  company        CargoCompany @relation(fields: [companyId], references: [id])
+  companyId      String
+  trips          CargoTrip[]
+}
+
+model CargoTrip {
+  id       String   @id @unique @default(uuid())
+  date     DateTime
+  price    Float
+  route    CargoRoute @relation(fields: [routeId], references: [id])
+  routeId  String
+  cargos   Cargo[]
 }
