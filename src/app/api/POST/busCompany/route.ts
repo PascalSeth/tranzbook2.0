@@ -1,9 +1,9 @@
 // pages/api/buscompany.js
 import prisma from "@/app/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
-export async function POST(req:NextResponse) {
+export async function POST(req:NextRequest) {
   try {
     const { name, email, password, logoUrl } = await req.json();
 
