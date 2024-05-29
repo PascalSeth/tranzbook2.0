@@ -39,7 +39,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import ApprovedDriversSheet from "../../../components/Sheetpop/ManageDRIVERS/ApprovedDriverSheet"
+import ApprovedDriversSheet from "@/app/admin/components/Sheetpop/ManageDRIVERS/ApprovedDriverSheet"
 
 
 

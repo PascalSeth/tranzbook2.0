@@ -39,7 +39,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import DeactivatedDriversSheet from "../../../components/Sheetpop/ManageDRIVERS/ApprovedDriverSheet"
+import DeactivatedDriversSheet from "@/app/admin/components/Sheetpop/ManageDRIVERS/ApprovedDriverSheet"
 
 type DeactivatedData = {
   firstName: string;
