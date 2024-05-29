@@ -1,5 +1,5 @@
-import { ApprovedDataTable } from '@/app/(pages)/manageDrivers/ApprovedDrivers/ApprovedDataTable';
 import React from 'react';
+import { ApprovedDataTable } from './ApprovedDataTable';
 
 const CountryPage: React.FC = () => {
   return (

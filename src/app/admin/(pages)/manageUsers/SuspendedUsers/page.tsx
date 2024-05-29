@@ -1,5 +1,5 @@
-import { SuspendedUsersDataTable } from '@/app/(pages)/manageUsers/SuspendedUsers/SuspendedUsersDataTable';
 import React from 'react';
+import { SuspendedUsersDataTable } from './SuspendedUsersDataTable';
 
 const ApprovedPending: React.FC = () => {
   return (
