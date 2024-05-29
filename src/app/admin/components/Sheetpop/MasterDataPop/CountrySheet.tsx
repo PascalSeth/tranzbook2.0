@@ -68,7 +68,7 @@ function CreateLocationForm({ onAddSuccess }: Props) {
       <SheetContent className="z-[999]">
         <SheetHeader>
           <SheetTitle>Add Location</SheetTitle>
-          <SheetFooter>Click save when you're done.</SheetFooter>
+          <SheetFooter>Click save when you&apos;re done.</SheetFooter>
         </SheetHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">

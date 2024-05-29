@@ -103,7 +103,7 @@ function BusSheet({ onAddSuccess }: Props) {
       <SheetContent className="z-[999]">
         <SheetHeader>
           <SheetTitle>Add Bus</SheetTitle>
-          <SheetDescription>Click save when you're done.</SheetDescription>
+          <SheetDescription>Click save when you&apos;re done.</SheetDescription>
         </SheetHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">

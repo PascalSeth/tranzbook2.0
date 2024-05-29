@@ -112,7 +112,7 @@ export default function Tabs({}: Props) {
           <CardHeader>
             <CardTitle>Wallet Settings</CardTitle>
             <CardDescription>
-              Make changes to your wallet here. Click save when you're done.
+              Make changes to your wallet here. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -147,7 +147,7 @@ export default function Tabs({}: Props) {
           <CardHeader>
             <CardTitle>Trip Settings</CardTitle>
             <CardDescription>
-              Make changes to your trip here. Click save when you're done.
+              Make changes to your trip here. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -218,7 +218,7 @@ export default function Tabs({}: Props) {
           <CardHeader>
             <CardTitle>App Settings</CardTitle>
             <CardDescription>
-              Make changes to your app here. Click save when you're done.
+              Make changes to your app here. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -325,7 +325,7 @@ export default function Tabs({}: Props) {
           <CardHeader>
             <CardTitle>Referral Settings</CardTitle>
             <CardDescription>
-              Make changes to your Referral here. Click save when you're done.
+              Make changes to your Referral here. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -360,7 +360,7 @@ export default function Tabs({}: Props) {
           <CardHeader>
             <CardTitle>Map Settings</CardTitle>
             <CardDescription>
-              Make changes to your Map here. Click save when you're done.
+              Make changes to your Map here. Click save when you&apos;re done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
