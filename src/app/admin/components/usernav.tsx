@@ -9,7 +9,7 @@ export function UserNav() {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                     <Avatar className="h-10 w-10">
-                        <AvatarImage src="/avatars/02.png" alt="" />
+                        <AvatarImage src="https://th-thumbnailer.cdn-si-edu.com/gnVVC1OLQs1cWyFWBciZSwXKon8=/1072x720/filters:no_upscale():focal(792x601:793x602)/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/52/e4/52e44474-c2dc-41e0-bb77-42a904695196/this-image-shows-a-portrait-of-dragon-man-credit-chuang-zhao_web.jpg" alt="" />
                     </Avatar>
         
             </DropdownMenuTrigger>

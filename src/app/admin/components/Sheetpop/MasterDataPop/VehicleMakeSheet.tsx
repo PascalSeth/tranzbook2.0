@@ -13,6 +13,13 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { PlusCircle } from 'lucide-react';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
 
 type BusCompany = {
   id: string;
@@ -141,21 +148,18 @@ function BusSheet({ onAddSuccess }: Props) {
               <Label htmlFor="companyId" className="text-left">
                 Company
               </Label>
-              <select
-                id="companyId"
-                value={companyId}
-                onChange={(e) => setCompanyId(e.target.value)}
-                className="col-span-3 border rounded p-2"
-              >
-                <option value="" disabled>
-                  Select a company
-                </option>
-                {busCompanies.map((company) => (
-                  <option key={company.id} value={company.id}>
-                    {company.name}
-                  </option>
-                ))}
-              </select>
+              <Select value={companyId} onValueChange={setCompanyId}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a company" />
+                </SelectTrigger>
+                <SelectContent className='z-[99999]'>
+                  {busCompanies.map((company) => (
+                    <SelectItem key={company.id} value={company.id}>
+                      {company.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           {error && <p className="text-red-500">{error}</p>}

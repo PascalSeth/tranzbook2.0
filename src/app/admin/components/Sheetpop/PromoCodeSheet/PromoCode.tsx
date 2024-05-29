@@ -13,7 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { CirclePlusIcon } from 'lucide-react';
+import { CircleIcon } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PromoCalendarForm } from './Calendar';
@@ -101,7 +101,7 @@ function PromoCodeSheet({ onAddSuccess }: { onAddSuccess: () => void }) {
     <Sheet>
       <SheetTrigger className='flex items-center'>
         <Button className='text-[12px] bg-[#48A0FF] py-2 h-fit'>
-          <CirclePlusIcon className='mr-1' size={12} /> Add Code
+          <CircleIcon className='mr-1' size={12} /> Add Code
         </Button>
       </SheetTrigger>
       <SheetContent className='z-[9999]'>
