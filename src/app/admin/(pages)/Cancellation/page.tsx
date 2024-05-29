@@ -9,7 +9,6 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from '@/components/ui/button';
-import CancellationSheet from '../../components/Sheetpop/Cancellation/CancellationSheet';
 
 const Cancellation = () => {
     interface Data {
@@ -27,7 +26,6 @@ const Cancellation = () => {
 
     return (
         <div>
-            <CancellationSheet />
             <Table>
                 <TableCaption>A list of your Cancellation.</TableCaption>
                 <TableHeader>
