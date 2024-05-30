@@ -14,9 +14,9 @@ import { CalendarForm } from './Calendar';
 export default function FormBus() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
-  // const [date, setDate] = useState<Date | null>(null);
-  // const [returnDate, setReturnDate] = useState<Date | null>(null);
-  // const [ticketQuantity, setTicketQuantity] = useState(0);
+  const [date, setDate] = useState<Date | null>(null);
+  const [returnDate, setReturnDate] = useState<Date | null>(null);
+  const [ticketQuantity, setTicketQuantity] = useState(0);
 
   const router = useRouter();
 
@@ -34,16 +34,16 @@ export default function FormBus() {
     }
   };
 
-  // const handleDateChange = (selectedDate: Date | null) => {
-  //   setDate(selectedDate);
-  //   if (selectedDate && selectedDate.getTime() === returnDate?.getTime()) {
-  //     setReturnDate(null);
-  //   }
-  // };
+  const handleDateChange = (selectedDate: Date | null) => {
+    setDate(selectedDate);
+    if (selectedDate && selectedDate.getTime() === returnDate?.getTime()) {
+      setReturnDate(null);
+    }
+  };
 
-  // const handleReturnDateChange = (selectedReturnDate: Date | null) => {
-  //   setReturnDate(selectedReturnDate);
-  // };
+  const handleReturnDateChange = (selectedReturnDate: Date | null) => {
+    setReturnDate(selectedReturnDate);
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -85,7 +85,7 @@ export default function FormBus() {
           </div>
         </div>
 
-        {/* <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+        <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
           <CalendarMonthIcon className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">DATE</label>
@@ -117,7 +117,7 @@ export default function FormBus() {
               className="border-none outline-none bg-transparent w-full"
             />
           </div>
-        </div> */}
+        </div>
       </form>
       <button
         type="submit"

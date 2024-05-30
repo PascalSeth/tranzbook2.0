@@ -65,17 +65,12 @@ const Why: React.FC<WhyProps> = ({ activeButton }) => {
         )}
       </div>
       <motion.div
-        initial={{ x: -500, opacity: 0.2 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 2.5 }}
         className='imagepic rounded-b-[2pc]'
       >
         <Image quality={100} src={man} alt='' className='imagepic rounded-b-[2pc] ' />
       </motion.div>
       <motion.div
-        initial={{ x: 500, opacity: 0.2 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 2.5 }}
+
         className='imagepic max-lg:hidden rounded-b-[2pc]'
       >
         <Image quality={100} src={bus} alt='' className='whyImage rounded-b-[2pc]' />
@@ -130,9 +125,7 @@ const Why: React.FC<WhyProps> = ({ activeButton }) => {
         )}
       </motion.div>
       <motion.div
-        initial={{ x: 500, opacity: 0.2 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 2.5 }}
+
         className='imagepic max-lg:block lg:hidden rounded-b-[2pc]'
       >
         <Image quality={100} src={bus} alt='' className='imagepic rounded-b-[2pc]' />

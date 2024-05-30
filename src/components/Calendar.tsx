@@ -21,6 +21,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
+import { useEffect, useState } from "react";
 
 const FormSchema = z.object({
   dob: z.date({
@@ -33,6 +34,12 @@ export function CalendarForm({ onDateChange, disabledDates = [] }: { onDateChang
     resolver: zodResolver(FormSchema),
   });
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
       title: "You submitted the following values:",
@@ -42,6 +49,10 @@ export function CalendarForm({ onDateChange, disabledDates = [] }: { onDateChang
         </pre>
       ),
     });
+  }
+
+  if (!isClient) {
+    return null;
   }
 
   return (
@@ -80,7 +91,7 @@ export function CalendarForm({ onDateChange, disabledDates = [] }: { onDateChang
                     }}
                     disabled={(date) =>
                       date.getTime() < new Date().setHours(0, 0, 0, 0) || 
-                      disabledDates.some(disabledDate => disabledDate.getTime() >= date.getTime())
+                      disabledDates.some(disabledDate => disabledDate.getTime() === date.getTime())
                     }
                     initialFocus
                   />
