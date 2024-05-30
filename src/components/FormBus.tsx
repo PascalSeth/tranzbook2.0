@@ -59,7 +59,7 @@ export default function FormBus() {
   };
 
   return (
-    <div className="grid max-lg:grid-cols-1 border-[#fdb022] my-5 max-lg:min-w-[700px] max-md:min-w-96 max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2 grid-cols-[1fr_auto] grid-rows-1 justify-items-center justify-center items-start">
+    <div className="grid max-lg:grid-cols-1 border-[#fdb022] my-5  max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2 grid-cols-[1fr_auto] grid-rows-1 justify-items-center justify-center items-start">
       <form onSubmit={handleSubmit} className="grid grid-cols-5 max-lg:grid-cols-2">
         <div className="flex items-center lg:rounded-l-[1pc] max-lg:rounded-tl-[1pc] bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
           <PanoramaFishEyeRounded className="text-blue-500 text-xl mr-2" />

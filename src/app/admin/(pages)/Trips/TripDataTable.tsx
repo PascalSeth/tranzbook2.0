@@ -33,7 +33,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import TripSheet from '../../components/Sheetpop/Trips/TripSheet';
 
-interface TripData {
+type Bus = {
+  id: string;
+  name: string;
+  plateNumber: string;
+  busType: string;
+};
+
+type TripData = {
   id: string;
   date: string;
   price: number;
@@ -44,19 +51,20 @@ interface TripData {
   duration: number;
   distance: number;
   companyId: string;
-}
+};
 
-interface Location {
+type Route = {
+  id: string;
+  startLocationId: string;
+  endLocationId: string;
+};
+
+type Location = {
   id: string;
   name: string;
-}
+};
 
-interface BusCompany {
-  id: string;
-  name: string;
-}
-
-const columns: ColumnDef<TripData & { startLocationName: string; endLocationName: string; companyName: string; }>[] = [
+const columns: ColumnDef<TripData & { startLocationName: string; endLocationName: string; busType: string; }>[] = [
   {
     accessorKey: "Sno",
     header: "Sr No",
@@ -78,72 +86,86 @@ const columns: ColumnDef<TripData & { startLocationName: string; endLocationName
     cell: ({ row }) => <div>{row.getValue("price")}</div>,
   },
   {
-    accessorKey: "busId",
-    header: "Bus ID",
-    cell: ({ row }) => <div>{row.getValue("busId")}</div>,
+    accessorKey: "busType",
+    header: "Bus Type",
+    cell: ({ row }) => <div>{row.getValue("busType")}</div>,
   },
   {
-    accessorKey: "routeId",
-    header: "Route ID",
-    cell: ({ row }) => <div>{row.getValue("routeId")}</div>,
+    accessorKey: "startLocationName",
+    header: "Start Location",
+    cell: ({ row }) => <div>{row.getValue("startLocationName")}</div>,
+  },
+  {
+    accessorKey: "endLocationName",
+    header: "End Location",
+    cell: ({ row }) => <div>{row.getValue("endLocationName")}</div>,
   },
 ];
 
 export function Trip() {
   const [data, setData] = useState<TripData[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
-  const [busCompanies, setBusCompanies] = useState<BusCompany[]>([]);
-  const [sortedData, setSortedData] = useState<(TripData & { startLocationName: string; endLocationName: string; companyName: string; })[]>([]);
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [buses, setBuses] = useState<Bus[]>([]);
+  const [sortedData, setSortedData] = useState<(TripData & { startLocationName: string; endLocationName: string; busType: string; })[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const fetchLocations = async () => {
+  const fetchData = async () => {
     try {
-      const [routeResponse, locationsResponse, companiesResponse] = await Promise.all([
-        fetch('/api/GET/getRoute'),
+      const [tripResponse, locationResponse, routeResponse, busResponse] = await Promise.all([
+        fetch('/api/GET/getTrip'),
         fetch('/api/GET/getLocation'),
-        fetch('/api/GET/getbusCompany'),
+        fetch('/api/GET/getRoute'),
+        fetch('/api/GET/getBuses'),
       ]);
 
-      if (!routeResponse.ok || !locationsResponse.ok || !companiesResponse.ok) {
+      if (!tripResponse.ok || !locationResponse.ok || !routeResponse.ok || !busResponse.ok) {
         throw new Error('Failed to fetch data');
       }
 
-      const routes = await routeResponse.json();
-      const locationData = await locationsResponse.json();
-      const companyData = await companiesResponse.json();
+      const tripData = await tripResponse.json();
+      const locationData = await locationResponse.json();
+      const routeData = await routeResponse.json();
+      const busData = await busResponse.json();
 
-      setData(Array.isArray(routes) ? routes : []);
+      setData(Array.isArray(tripData) ? tripData : []);
       setLocations(Array.isArray(locationData) ? locationData : []);
-      setBusCompanies(Array.isArray(companyData) ? companyData : []);
+      setRoutes(Array.isArray(routeData) ? routeData : []);
+      setBuses(Array.isArray(busData) ? busData : []);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
   useEffect(() => {
-    fetchLocations();
+    fetchData();
   }, []);
 
   useEffect(() => {
     const locationMap = new Map(locations.map(location => [location.id, location.name]));
-    const companyMap = new Map(busCompanies.map(company => [company.id, company.name]));
+    const routeMap = new Map(routes.map(route => [route.id, route]));
+    const busMap = new Map(buses.map(bus => [bus.id, bus.busType]));
 
-    const newSortedData = data.map(route => ({
-      ...route,
-      startLocationName: locationMap.get(route.startLocationId) || route.startLocationId,
-      endLocationName: locationMap.get(route.endLocationId) || route.endLocationId,
-      companyName: companyMap.get(route.companyId) || route.companyId,
-    }));
+    const newSortedData = data.map(trip => {
+      const route = routeMap.get(trip.routeId);
+      return {
+        ...trip,
+        startLocationName: route ? locationMap.get(route.startLocationId) || route.startLocationId : trip.startLocationId,
+        endLocationName: route ? locationMap.get(route.endLocationId) || route.endLocationId : trip.endLocationId,
+        busType: busMap.get(trip.busId) || trip.busId,
+      };
+    });
 
     setSortedData(newSortedData);
-  }, [data, locations, busCompanies]);
+  }, [data, locations, routes, buses]);
 
   const handleAddSuccess = () => {
-    fetchLocations();
+    fetchData();
   };
+
   const table = useReactTable({
     data: sortedData,
     columns,

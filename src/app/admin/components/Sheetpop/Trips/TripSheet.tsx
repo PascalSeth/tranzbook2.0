@@ -22,15 +22,22 @@ import {
 } from '@/components/ui/select';
 import { CalendarDate } from './Calendar';
 
-type Route = {
+type Bus = {
   id: string;
-  date: string;
-  price: number;
-  busId: string;
-  routeId: string;
+  name: string;
+  plateNumber: string;
+  busType: string;
 };
 
-type BusCompany = {
+type Route = {
+  id: string;
+  startLocationId: string;
+  endLocationId: string;
+  startLocationName: string;
+  endLocationName: string;
+};
+
+type Location = {
   id: string;
   name: string;
 };
@@ -39,20 +46,20 @@ type Props = {
   onAddSuccess: () => void;
 };
 
-async function fetchBusCompanies() {
+async function fetchBuses() {
   try {
-    const response = await fetch('/api/GET/getbusCompany');
+    const response = await fetch('/api/GET/getBuses');
     if (!response.ok) {
-      throw new Error('Failed to fetch bus companies');
+      throw new Error('Failed to fetch buses');
     }
     return await response.json();
   } catch (error) {
-    console.error('Error fetching bus companies:', error);
+    console.error('Error fetching buses:', error);
     return [];
   }
 }
 
-async function fetchroutes() {
+async function fetchRoutes() {
   try {
     const response = await fetch('/api/GET/getRoute');
     if (!response.ok) {
@@ -65,35 +72,56 @@ async function fetchroutes() {
   }
 }
 
+async function fetchLocations() {
+  try {
+    const response = await fetch('/api/GET/getLocation');
+    if (!response.ok) {
+      throw new Error('Failed to fetch locations');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching locations:', error);
+    return [];
+  }
+}
+
 function TripSheet({ onAddSuccess }: Props) {
   const [date, setDate] = useState('');
   const [price, setPrice] = useState(0);
   const [busId, setBusId] = useState('');
   const [routeId, setRouteId] = useState('');
-  const [busCompanies, setBusCompanies] = useState<BusCompany[]>([]);
-  const [routes, setroutes] = useState<Route[]>([]);
+  const [buses, setBuses] = useState<Bus[]>([]);
+  const [routes, setRoutes] = useState<Route[]>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [busesData, routesData, locationsData] = await Promise.all([
+        fetchBuses(),
+        fetchRoutes(),
+        fetchLocations()
+      ]);
+      setBuses(busesData);
+      setLocations(locationsData);
+
+      const mappedRoutes = routesData.map((route: Route) => ({
+        ...route,
+        startLocationName: locationsData.find((loc: Location) => loc.id === route.startLocationId)?.name || '',
+        endLocationName: locationsData.find((loc: Location) => loc.id === route.endLocationId)?.name || '',
+      }));
+      setRoutes(mappedRoutes);
+    };
+
+    fetchData();
+  }, []);
 
   const handleDateChange = (selectedDate: Date | null) => {
     if (selectedDate) {
       setDate(selectedDate.toISOString());
     }
   };
-
-  useEffect(() => {
-    // Fetch bus companies and routes
-    const fetchData = async () => {
-      const [companiesData, routesData] = await Promise.all([
-        fetchBusCompanies(),
-        fetchroutes()
-      ]);
-      setBusCompanies(companiesData);
-      setroutes(routesData);
-    };
-
-    fetchData();
-  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -164,16 +192,16 @@ function TripSheet({ onAddSuccess }: Props) {
             </div>
             <div className="grid grid-cols-1 items-center gap-4">
               <Label htmlFor="busId" className="text-left">
-                Bus ID
+                Bus
               </Label>
               <Select value={busId} onValueChange={setBusId}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a bus ID" />
+                  <SelectValue placeholder="Select a bus" />
                 </SelectTrigger>
                 <SelectContent className="z-[99999]">
-                  {busCompanies.map((company) => (
-                    <SelectItem key={company.id} value={company.id}>
-                      {company.name}
+                  {buses.map((bus) => (
+                    <SelectItem key={bus.id} value={bus.id}>
+                      {bus.busType} ({bus.plateNumber})
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -181,16 +209,16 @@ function TripSheet({ onAddSuccess }: Props) {
             </div>
             <div className="grid grid-cols-1 items-center gap-4">
               <Label htmlFor="routeId" className="text-left">
-                Route ID
+                Route
               </Label>
               <Select value={routeId} onValueChange={setRouteId}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select a route ID" />
+                  <SelectValue placeholder="Select a route" />
                 </SelectTrigger>
                 <SelectContent className="z-[99999]">
                   {routes.map((route) => (
                     <SelectItem key={route.id} value={route.id}>
-                      {route.routeId}
+                      {route.startLocationName} to {route.endLocationName}
                     </SelectItem>
                   ))}
                 </SelectContent>
