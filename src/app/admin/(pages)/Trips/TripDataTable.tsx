@@ -31,10 +31,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ServiceLocation from '../../components/Sheetpop/serviceLocations/serviceLocationsSheet';
+import TripSheet from '../../components/Sheetpop/Trips/TripSheet';
 
-interface Data {
+interface TripData {
   id: string;
+  date: string;
+  price: number;
+  busId: string;
+  routeId: string;
   startLocationId: string;
   endLocationId: string;
   duration: number;
@@ -52,7 +56,7 @@ interface BusCompany {
   name: string;
 }
 
-const columns: ColumnDef<Data & { startLocationName: string; endLocationName: string; companyName: string; }>[] = [
+const columns: ColumnDef<TripData & { startLocationName: string; endLocationName: string; companyName: string; }>[] = [
   {
     accessorKey: "Sno",
     header: "Sr No",
@@ -64,37 +68,32 @@ const columns: ColumnDef<Data & { startLocationName: string; endLocationName: st
     cell: ({ row }) => <div>{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "startLocationName",
-    header: "Start Location",
-    cell: ({ row }) => <div>{row.getValue("startLocationName")}</div>,
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ row }) => <div>{row.getValue("date")}</div>,
   },
   {
-    accessorKey: "endLocationName",
-    header: "End Location",
-    cell: ({ row }) => <div>{row.getValue("endLocationName")}</div>,
+    accessorKey: "price",
+    header: "Price",
+    cell: ({ row }) => <div>{row.getValue("price")}</div>,
   },
   {
-    accessorKey: "duration",
-    header: "Duration",
-    cell: ({ row }) => <div>{row.getValue("duration")} minutes</div>,
+    accessorKey: "busId",
+    header: "Bus ID",
+    cell: ({ row }) => <div>{row.getValue("busId")}</div>,
   },
   {
-    accessorKey: "distance",
-    header: "Distance",
-    cell: ({ row }) => <div>{row.getValue("distance")} km</div>,
-  },
-  {
-    accessorKey: "companyName",
-    header: "Company",
-    cell: ({ row }) => <div>{row.getValue("companyName")}</div>,
+    accessorKey: "routeId",
+    header: "Route ID",
+    cell: ({ row }) => <div>{row.getValue("routeId")}</div>,
   },
 ];
 
-export function Location() {
-  const [data, setData] = useState<Data[]>([]);
+export function Trip() {
+  const [data, setData] = useState<TripData[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
   const [busCompanies, setBusCompanies] = useState<BusCompany[]>([]);
-  const [sortedData, setSortedData] = useState<(Data & { startLocationName: string; endLocationName: string; companyName: string; })[]>([]);
+  const [sortedData, setSortedData] = useState<(TripData & { startLocationName: string; endLocationName: string; companyName: string; })[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -145,7 +144,6 @@ export function Location() {
   const handleAddSuccess = () => {
     fetchLocations();
   };
-
   const table = useReactTable({
     data: sortedData,
     columns,
@@ -167,7 +165,7 @@ export function Location() {
 
   return (
     <div>
-      <ServiceLocation onAddSuccess={handleAddSuccess} />
+      <TripSheet onAddSuccess={handleAddSuccess} />
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
@@ -259,4 +257,4 @@ export function Location() {
   );
 }
 
-export default Location;
+export default Trip;

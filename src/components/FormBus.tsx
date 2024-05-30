@@ -14,11 +14,11 @@ import { CalendarForm } from './Calendar';
 export default function FormBus() {
   const [fromLocation, setFromLocation] = useState('');
   const [toLocation, setToLocation] = useState('');
-  const [date, setDate] = useState<Date | null>(null);
-  const [returnDate, setReturnDate] = useState<Date | null>(null);
-  const [ticketQuantity, setTicketQuantity] = useState(0);
+  // const [date, setDate] = useState<Date | null>(null);
+  // const [returnDate, setReturnDate] = useState<Date | null>(null);
+  // const [ticketQuantity, setTicketQuantity] = useState(0);
 
-  const router= useRouter()
+  const router = useRouter();
 
   const handleFromLocationSelect = (location: string) => {
     setFromLocation(location);
@@ -34,28 +34,41 @@ export default function FormBus() {
     }
   };
 
-  const handleDateChange = (selectedDate: Date | null) => {
-    setDate(selectedDate);
-    if (selectedDate && selectedDate.getTime() === returnDate?.getTime()) {
-      setReturnDate(null);
-    }
-  };
+  // const handleDateChange = (selectedDate: Date | null) => {
+  //   setDate(selectedDate);
+  //   if (selectedDate && selectedDate.getTime() === returnDate?.getTime()) {
+  //     setReturnDate(null);
+  //   }
+  // };
 
-  const handleReturnDateChange = (selectedReturnDate: Date | null) => {
-    setReturnDate(selectedReturnDate);
+  // const handleReturnDateChange = (selectedReturnDate: Date | null) => {
+  //   setReturnDate(selectedReturnDate);
+  // };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const query = {
+      fromLocation,
+      toLocation,
+      // date: date ? date.toISOString() : '',
+      // returnDate: returnDate ? returnDate.toISOString() : '',
+      // ticketQuantity,
+    };
+    const queryString = new URLSearchParams(query as any).toString();
+    router.push(`/search?${queryString}`);
   };
 
   return (
-    <div className="grid max-lg:grid-cols-1 border-[#fdb022] my-5 max-lg:min-w-[700px] max-md:min-w-96 max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2   grid-cols-[1fr_auto] grid-rows-1 justify-items-center justify-center items-start ">
-      <form className="grid grid-cols-5 max-lg:grid-cols-2 ">
-        <div className="flex items-center lg:rounded-l-[1pc]  max-lg:rounded-tl-[1pc] bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+    <div className="grid max-lg:grid-cols-1 border-[#fdb022] my-5 max-lg:min-w-[700px] max-md:min-w-96 max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2 grid-cols-[1fr_auto] grid-rows-1 justify-items-center justify-center items-start">
+      <form onSubmit={handleSubmit} className="grid grid-cols-5 max-lg:grid-cols-2">
+        <div className="flex items-center lg:rounded-l-[1pc] max-lg:rounded-tl-[1pc] bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
           <PanoramaFishEyeRounded className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">FROM</label>
             <ComboboxForm
               onLocationSelect={handleFromLocationSelect}
               disabledOptions={[toLocation]}
-              locationType="FROM" 
+              locationType="FROM"
             />
           </div>
         </div>
@@ -71,8 +84,8 @@ export default function FormBus() {
             />
           </div>
         </div>
-        
-        <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+
+        {/* <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
           <CalendarMonthIcon className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">DATE</label>
@@ -91,7 +104,7 @@ export default function FormBus() {
           </div>
         </div>
 
-        <div className="flex items-center max-lg:col-span-2 bg-white  max-lg:border-none  p-1">
+        <div className="flex items-center max-lg:col-span-2 bg-white max-lg:border-none p-1">
           <ConfirmationNumberIcon className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">TICKET QUANTITY</label>
@@ -104,15 +117,16 @@ export default function FormBus() {
               className="border-none outline-none bg-transparent w-full"
             />
           </div>
-
-          
-        </div>
+        </div> */}
       </form>
-      <button className=" flex items-center w-full h-full rounded-r-[1pc] max-lg:rounded-none justify-center hover:bg-[#48a0ff81] bg-[#48A0ff] text-white border-none p-1 cursor-pointer">
+      <button
+        type="submit"
+        className="flex items-center w-full h-full rounded-r-[1pc] max-lg:rounded-none justify-center hover:bg-[#48a0ff81] bg-[#48A0ff] text-white border-none p-1 cursor-pointer"
+        onClick={handleSubmit}
+      >
         <SearchIcon className="mr-2" />
         Search
       </button>
-
     </div>
   );
 }

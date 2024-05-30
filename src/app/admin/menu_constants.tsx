@@ -52,6 +52,11 @@ export const   SIDENAV_ITEMS: SideNavItemGroup[] = [
                 icon: <LocateFixed size={20} />,
             },
             {
+                title: 'Trips',
+                path: '/admin/Trips',
+                icon: <LocateFixed size={20} />,
+            },
+            {
                 title: 'Admins',
                 path: '/admin/Admin',
                 icon: <BsPersonFillCheck size={20} />,
