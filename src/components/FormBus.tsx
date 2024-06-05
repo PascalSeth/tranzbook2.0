@@ -45,23 +45,26 @@ export default function FormBus() {
     setReturnDate(selectedReturnDate);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     const query = {
       fromLocation,
       toLocation,
-      // date: date ? date.toISOString() : '',
-      // returnDate: returnDate ? returnDate.toISOString() : '',
-      // ticketQuantity,
+      date: date ? date.toISOString() : '',
+      returnDate: returnDate ? returnDate.toISOString() : '',
+      ticketQuantity,
     };
-    const queryString = new URLSearchParams(query as any).toString();
-    router.push(`/search?${queryString}`);
+const queryString = new URLSearchParams({
+ ...query,
+  ticketQuantity: ticketQuantity.toString(),
+}).toString();
+    router.push(`/search?trip=${queryString}`);
   };
+  
 
   return (
-    <div className="grid max-lg:grid-cols-1 border-[#fdb022] my-5  max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2 grid-cols-[1fr_auto] grid-rows-1 justify-items-center justify-center items-start">
-      <form onSubmit={handleSubmit} className="grid grid-cols-5 max-lg:grid-cols-2">
-        <div className="flex items-center lg:rounded-l-[1pc] max-lg:rounded-tl-[1pc] bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+    <div className="grid max-lg:grid-cols-1   border-[#fdb022] my-5 w-full   max-lg:rounded-t-[1pc] max-lg:rounded-b-none rounded-[1pc] border-2 grid-cols-[1fr_auto]  justify-items-center justify-center items-center">
+      <form onSubmit={handleSubmit} className="grid grid-cols-5 w-full max-lg:grid-cols-2">
+        <div className="flex items-center lg:rounded-l-[1pc] max-lg:rounded-tl-[1pc] bg-white border-r-2  max-lg:border-none border-[#48A0ff] p-1">
           <PanoramaFishEyeRounded className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">FROM</label>
@@ -73,7 +76,7 @@ export default function FormBus() {
           </div>
         </div>
 
-        <div className="flex max-lg:rounded-tr-[1pc] items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+        <div className="flex max-lg:rounded-tr-[1pc] items-center bg-white border-r-2  max-lg:border-none border-[#48A0ff] p-1">
           <LocationOnIcon className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#74afef] font-semibold text-xs">TO</label>
@@ -85,7 +88,7 @@ export default function FormBus() {
           </div>
         </div>
 
-        <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+        <div className="flex items-center bg-white border-r-2  max-lg:border-none border-[#48A0ff] p-1">
           <CalendarMonthIcon className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">DATE</label>
@@ -93,7 +96,7 @@ export default function FormBus() {
           </div>
         </div>
 
-        <div className="flex items-center bg-white border-r-2 max-lg:border-none border-[#48A0ff] p-1">
+        <div className="flex items-center bg-white border-r-2  max-lg:border-none border-[#48A0ff] p-1">
           <CalendarTodayIcon className="text-blue-500 text-xl mr-2" />
           <div className="flex text-gray-400 flex-col">
             <label className="text-[#48A0ff] font-semibold text-xs">RETURN DATE</label>

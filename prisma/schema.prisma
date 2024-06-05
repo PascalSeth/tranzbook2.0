@@ -25,6 +25,18 @@ model BusCompany {
   logoUrl String?
   buses   Bus[]
   routes  Route[]
+  admins  Admin[]
+  drivers Driver[]
+}
+
+model Admin {
+  id          String     @id @unique @default(uuid())
+  email       String     @unique
+  password    String
+  firstName   String
+  lastName    String
+  company     BusCompany @relation(fields: [companyId], references: [id])
+  companyId   String
 }
 
 model Bus {
@@ -34,16 +46,28 @@ model Bus {
   busType     String
   company     BusCompany @relation(fields: [companyId], references: [id])
   companyId   String
+  driver      Driver?    @relation(fields: [driverId], references: [id])
+  driverId    String?
   trips       Trip[]
 }
 
+model Driver {
+  id         String     @id @unique @default(uuid())
+  firstName  String
+  lastName   String
+  licenseNumber String  @unique
+  company    BusCompany @relation(fields: [companyId], references: [id])
+  companyId  String
+  buses      Bus[]
+}
+
 model Location {
-  id         String   @id @unique @default(uuid())
-  name       String
-  routesFrom Route[]  @relation("routesFrom")
-  routesTo   Route[]  @relation("routesTo")
-  cargoRoutesFrom CargoRoute[] @relation("cargoRoutesFrom")
-  cargoRoutesTo   CargoRoute[] @relation("cargoRoutesTo")
+  id                String       @id @unique @default(uuid())
+  name              String
+  routesFrom        Route[]      @relation("routesFrom")
+  routesTo          Route[]      @relation("routesTo")
+  cargoRoutesFrom   CargoRoute[] @relation("cargoRoutesFrom")
+  cargoRoutesTo     CargoRoute[] @relation("cargoRoutesTo")
 }
 
 model Route {
@@ -52,8 +76,8 @@ model Route {
   startLocationId String
   endLocation    Location   @relation("routesTo", fields: [endLocationId], references: [id])
   endLocationId  String
-  duration       Int        // Duration in minutes
-  distance       Int        // Distance in kilometers
+  duration       Int      
+  distance       Int        
   company        BusCompany @relation(fields: [companyId], references: [id])
   companyId      String
   trips          Trip[]
@@ -107,8 +131,8 @@ model CargoRoute {
   startLocationId String
   endLocation    Location     @relation("cargoRoutesTo", fields: [endLocationId], references: [id])
   endLocationId  String
-  duration       Int          // Duration in minutes
-  distance       Int          // Distance in kilometers
+  duration       Int          
+  distance       Int          
   company        CargoCompany @relation(fields: [companyId], references: [id])
   companyId      String
   trips          CargoTrip[]

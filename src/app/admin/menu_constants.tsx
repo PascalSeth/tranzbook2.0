@@ -1,4 +1,4 @@
-import { Car, GitBranch, LocateFixed, LucideSidebarClose, Speaker, Ticket } from "lucide-react";
+import { Bus, Car, GitBranch, LocateFixed, LucideSidebarClose, Speaker, Ticket } from "lucide-react";
 import { BsCash, BsChat, BsDoorClosed, BsEnvelope, BsFile, BsGear, BsHouseDoor, BsKanban, BsListUl, BsPeople, BsPersonFillCheck, BsPersonFillGear, BsPersonGear, BsQuestionCircle, BsX } from "react-icons/bs";
 import { SideNavItemGroup } from "./components/type/sidebar-nav-item";
 
@@ -54,7 +54,7 @@ export const   SIDENAV_ITEMS: SideNavItemGroup[] = [
             {
                 title: 'Trips',
                 path: '/admin/Trips',
-                icon: <LocateFixed size={20} />,
+                icon: <Bus size={20} />,
             },
             {
                 title: 'Admins',

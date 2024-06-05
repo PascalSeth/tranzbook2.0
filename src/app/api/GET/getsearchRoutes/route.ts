@@ -1,42 +1,44 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import prisma from "@/app/lib/db";
+import { NextApiRequest } from "next";
+import { NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+export async function GET(req: NextApiRequest) {
+  const { fromLocation, toLocation, date, returnDate, ticketQuantity } = req.query || {};
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { fromLocation, toLocation } = req.query;
+  const queryConditions: any = {};
+
+  if (fromLocation && typeof fromLocation === 'string') {
+    queryConditions['route.startLocation.name'] = fromLocation;
+  }
+  if (toLocation && typeof toLocation === 'string') {
+    queryConditions['route.endLocation.name'] = toLocation;
+  }
+  if (date && typeof date === 'string') {
+    queryConditions.date = new Date(date);
+  }
+  if (returnDate && typeof returnDate === 'string') {
+    queryConditions.returnDate = new Date(returnDate);
+  }
+  if (ticketQuantity && typeof ticketQuantity === 'string') {
+    queryConditions.ticketQuantity = parseInt(ticketQuantity, 10);
+  }
 
   try {
-    const routes = await prisma.route.findMany({
-      where: {
-        AND: [
-          fromLocation ? { startLocationId: fromLocation as string } : {},
-          toLocation ? { endLocationId: toLocation as string } : {}
-          // Add more filtering conditions based on date, returnDate, and ticketQuantity if necessary
-        ]
-      },
+    const trips = await prisma.trip.findMany({
+      where: queryConditions,
       include: {
-        startLocation: true,
-        endLocation: true,
-        company: true
-      }
+        bus: true,
+        route: {
+          include: {
+            startLocation: true,
+            endLocation: true,
+          },
+        },
+      },
     });
-
-    const result = routes.map(route => ({
-      id: route.id,
-      startLocationId: route.startLocationId,
-      endLocationId: route.endLocationId,
-      duration: route.duration,
-      distance: route.distance,
-      companyId: route.companyId,
-      startLocationName: route.startLocation.name,
-      endLocationName: route.endLocation.name,
-      companyName: route.company.name
-    }));
-
-    res.status(200).json(result);
+    return NextResponse.json(trips);
   } catch (error) {
-    console.error('Error fetching routes:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Server error:', error);
+    return NextResponse.json({ error: 'An error occurred while fetching trips' }, { status: 500 });
   }
 }
