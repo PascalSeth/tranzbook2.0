@@ -6,6 +6,7 @@ type Props = {}
 function page({}: Props) {
   return (
     <div>
+    
         <Trip/>
     </div>
   )
