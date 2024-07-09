@@ -39,7 +39,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import ApprovedDriversSheet from "@/app/admin/components/Sheetpop/ManageDRIVERS/ApprovedDriverSheet"
 
 
 
@@ -165,7 +164,6 @@ export function ApproveUsersDataTable() {
 
   return (
     <div className="w-full">
-      <ApprovedDriversSheet />
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Name..."
