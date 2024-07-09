@@ -94,7 +94,7 @@ function ApprovedDriversSheet({ onAddSuccess }: Props) {
         <SheetHeader>
           <SheetTitle>Add Driver</SheetTitle>
           <SheetDescription>
-            Click save when you're done.
+            Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
