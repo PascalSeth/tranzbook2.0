@@ -34,6 +34,7 @@ function BusSheet({ onAddSuccess }: Props) {
   const [plateNumber, setPlateNumber] = useState('');
   const [capacity, setCapacity] = useState(0);
   const [busType, setBusType] = useState('');
+  const [imageUrl, setImageUrl] = useState<File | null>(null); // Add this line
   const [companyId, setCompanyId] = useState('');
   const [busCompanies, setBusCompanies] = useState<BusCompany[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,7 +61,7 @@ function BusSheet({ onAddSuccess }: Props) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!plateNumber || !capacity || !busType || !companyId) {
+    if (!plateNumber || !capacity || !busType || !companyId || !imageUrl) {
       setError('All fields are required.');
       return;
     }
@@ -69,12 +70,16 @@ function BusSheet({ onAddSuccess }: Props) {
     setError(null);
 
     try {
+      const formData = new FormData();
+      formData.append('plateNumber', plateNumber);
+      formData.append('capacity', capacity.toString());
+      formData.append('busType', busType);
+      formData.append('companyId', companyId);
+      formData.append('imageUrl', imageUrl);
+
       const response = await fetch('/api/POST/vehicleMake', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ plateNumber, capacity, busType, companyId }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -141,6 +146,17 @@ function BusSheet({ onAddSuccess }: Props) {
                 placeholder="Bus Type"
                 value={busType}
                 onChange={(e) => setBusType(e.target.value)}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-1 items-center gap-4">
+              <Label htmlFor="imageUrl" className="text-left">
+                Image
+              </Label>
+              <Input
+                id="imageUrl"
+                type="file"
+                onChange={(e) => setImageUrl(e.target.files?.[0] ?? null)}
                 className="col-span-3"
               />
             </div>

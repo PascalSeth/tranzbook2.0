@@ -58,11 +58,7 @@ const columns: ColumnDef<Data & { startLocationName: string; endLocationName: st
     header: "Sr No",
     cell: ({ row }) => <div>{row.index + 1}</div>,
   },
-  {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
-  },
+  
   {
     accessorKey: "startLocationName",
     header: "Start Location",

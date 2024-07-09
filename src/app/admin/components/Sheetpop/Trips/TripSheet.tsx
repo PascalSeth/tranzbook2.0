@@ -42,6 +42,12 @@ type Location = {
   name: string;
 };
 
+type Driver = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
 type Props = {
   onAddSuccess: () => void;
 };
@@ -85,26 +91,44 @@ async function fetchLocations() {
   }
 }
 
+async function fetchDrivers() {
+  try {
+    const response = await fetch('/api/GET/getDrivers');
+    if (!response.ok) {
+      throw new Error('Failed to fetch drivers');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching drivers:', error);
+    return [];
+  }
+}
+
 function TripSheet({ onAddSuccess }: Props) {
   const [date, setDate] = useState('');
+  const [departureTime, setDepartureTime] = useState('');
   const [price, setPrice] = useState(0);
   const [busId, setBusId] = useState('');
   const [routeId, setRouteId] = useState('');
+  const [driverId, setDriverId] = useState('');
   const [buses, setBuses] = useState<Bus[]>([]);
   const [routes, setRoutes] = useState<Route[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
+  const [drivers, setDrivers] = useState<Driver[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [busesData, routesData, locationsData] = await Promise.all([
+      const [busesData, routesData, locationsData, driversData] = await Promise.all([
         fetchBuses(),
         fetchRoutes(),
-        fetchLocations()
+        fetchLocations(),
+        fetchDrivers()
       ]);
       setBuses(busesData);
       setLocations(locationsData);
+      setDrivers(driversData);
 
       const mappedRoutes = routesData.map((route: Route) => ({
         ...route,
@@ -126,7 +150,7 @@ function TripSheet({ onAddSuccess }: Props) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!date || !price || !busId || !routeId) {
+    if (!date || !departureTime || !price || !busId || !routeId || !driverId) {
       setError('All fields are required.');
       return;
     }
@@ -140,7 +164,7 @@ function TripSheet({ onAddSuccess }: Props) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ date, price, busId, routeId }),
+        body: JSON.stringify({ date, departureTime, price, busId, routeId, driverId }),
       });
 
       if (!response.ok) {
@@ -178,6 +202,18 @@ function TripSheet({ onAddSuccess }: Props) {
                 Date
               </Label>
               <CalendarDate onDateChange={handleDateChange} />
+            </div>
+            <div className="grid grid-cols-1 items-center gap-4">
+              <Label htmlFor="departureTime" className="text-left">
+                Departure Time
+              </Label>
+              <Input
+                id="departureTime"
+                type="time"
+                value={departureTime}
+                onChange={(e) => setDepartureTime(e.target.value)}
+                className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
             </div>
             <div className="grid grid-cols-1 items-center gap-4">
               <Label htmlFor="price" className="text-left">
@@ -219,6 +255,23 @@ function TripSheet({ onAddSuccess }: Props) {
                   {routes.map((route) => (
                     <SelectItem key={route.id} value={route.id}>
                       {route.startLocationName} to {route.endLocationName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-1 items-center gap-4">
+              <Label htmlFor="driverId" className="text-left">
+                Driver
+              </Label>
+              <Select value={driverId} onValueChange={setDriverId}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a driver" />
+                </SelectTrigger>
+                <SelectContent className="z-[99999]">
+                  {drivers.map((driver) => (
+                    <SelectItem key={driver.id} value={driver.id}>
+                      {driver.firstName} {driver.lastName}
                     </SelectItem>
                   ))}
                 </SelectContent>

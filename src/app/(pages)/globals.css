@@ -141,7 +141,7 @@ body {
 @apply text-[1.4vh] flex items-center text-[#fdb022] 
 }
 .ic{
-  @apply h-[2vh]
+  @apply text-[12px]
 }
 
 .columncontainer{

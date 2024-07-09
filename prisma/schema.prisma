@@ -44,22 +44,25 @@ model Bus {
   plateNumber String
   capacity    Int
   busType     String
+  imageUrl    String?   
   company     BusCompany @relation(fields: [companyId], references: [id])
   companyId   String
-  driver      Driver?    @relation(fields: [driverId], references: [id])
-  driverId    String?
   trips       Trip[]
 }
 
+
 model Driver {
-  id         String     @id @unique @default(uuid())
-  firstName  String
-  lastName   String
-  licenseNumber String  @unique
-  company    BusCompany @relation(fields: [companyId], references: [id])
-  companyId  String
-  buses      Bus[]
+  id            String     @id @unique @default(uuid())
+  firstName     String
+  lastName      String
+  licenseNumber String     @unique
+  email         String     @unique
+  mobile        String
+  company       BusCompany @relation(fields: [companyId], references: [id])
+  companyId     String
+  trips         Trip[]
 }
+
 
 model Location {
   id                String       @id @unique @default(uuid())
@@ -84,15 +87,19 @@ model Route {
 }
 
 model Trip {
-  id       String   @id @unique @default(uuid())
-  date     DateTime
-  price    Float
-  bus      Bus      @relation(fields: [busId], references: [id])
-  busId    String
-  route    Route    @relation(fields: [routeId], references: [id])
-  routeId  String
-  bookings Booking[]
+  id         String   @id @unique @default(uuid())
+  date       DateTime
+  price      Float
+  departureTime  String 
+  bus        Bus      @relation(fields: [busId], references: [id])
+  busId      String
+  route      Route    @relation(fields: [routeId], references: [id])
+  routeId    String
+  driver     Driver   @relation(fields: [driverId], references: [id])
+  driverId   String
+  bookings   Booking[]
 }
+
 
 model Booking {
   id         String   @id @unique @default(uuid())

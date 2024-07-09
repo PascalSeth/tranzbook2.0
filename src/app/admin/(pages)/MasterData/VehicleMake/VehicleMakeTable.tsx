@@ -42,6 +42,7 @@ interface Data {
   capacity: number;
   busType: string;
   companyId: string;
+
   // action: React.ReactNode;
 }
 
@@ -86,6 +87,7 @@ export function VehicleMakeDataTable() {
       header: "Company ID",
       cell: ({ row }) => <div>{row.getValue("companyId")}</div>,
     },
+
     // {
     //   accessorKey: "action",
     //   header: "Action",

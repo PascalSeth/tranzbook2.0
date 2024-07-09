@@ -50,7 +50,6 @@ export function BookingFilterAccordion() {
 
       const companyData = await companyResponse.json();
 
-      console.log('Company Data:', companyData); // Debugging log for company data
       setCompanyData(Array.isArray(companyData) ? companyData : []);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -70,12 +69,11 @@ export function BookingFilterAccordion() {
     <Accordion type="multiple"  className=" w-full items-center">
         <h1 className="font-semibold text-gray-300 text-[18px]">Filter Trip</h1>
       <AccordionItem value="company">
-        <AccordionTrigger className="flex justify-normal"><BusFront/>Bus Operator  </AccordionTrigger>
-        <AccordionContent className="w-[10vw]">
-          <div className="grid grid-cols-1 gap-3">
+        <AccordionTrigger className="flex justify-between p-2"><div className="flex items-center"><BusFront/>Bus Operator  </div></AccordionTrigger>
+        <AccordionContent className="w-full">
+          <div className="grid grid-cols-1 p-2 gap-3">
             {companyData.map((company) => {
               return (
-
                 <label className="items-center flex" key={company.id}>
                   <input
                     type="checkbox"
@@ -83,7 +81,7 @@ export function BookingFilterAccordion() {
                     checked={filters.company.includes(company.id)}
                     onChange={() => handleCompanyChange(company.id)}
                   />
-                 <h2 className="font-semibold text-[#48A0FF]">{company.name}</h2> 
+                 <h2 className="font-semibold ml-2 text-[#48A0FF]">{company.name}</h2> 
                 </label>
  );
             })}
@@ -92,9 +90,9 @@ export function BookingFilterAccordion() {
       </AccordionItem>
 
       <AccordionItem value="departure-time">
-        <AccordionTrigger className="flex justify-normal"><DepartureBoard/> Departure Time</AccordionTrigger>
+        <AccordionTrigger className="flex justify-between p-2"><div className="flex items-center"><DepartureBoard/> Departure Time</div></AccordionTrigger>
         <AccordionContent>
-          <div className="grid grid-cols-1 gap-3  items-center">
+          <div className="grid grid-cols-1 p-2 gap-3  items-center">
             <label className='font-semibold flex items-center text-yellow-600'>
               <input
                 type="radio"
@@ -103,7 +101,7 @@ export function BookingFilterAccordion() {
                 checked={filters.departureTime === "morning"}
                 onChange={() => handleDepartureTimeChange("morning")}
               />
-              <Sunrise size={16}/>Morning
+              <Sunrise size={16} className="ml-2"/>Morning
             </label>
             <label className='font-semibold text-orange-600 flex items-center'>
               <input
@@ -113,7 +111,7 @@ export function BookingFilterAccordion() {
                 checked={filters.departureTime === "afternoon"}
                 onChange={() => handleDepartureTimeChange("afternoon")}
               />
-              <Sun size={16}/>Afternoon
+              <Sun size={16} className="ml-2"/>Afternoon
             </label>
             <label className='font-semibold  flex items-center'>
               <input
@@ -123,7 +121,7 @@ export function BookingFilterAccordion() {
                 checked={filters.departureTime === "evening"}
                 onChange={() => handleDepartureTimeChange("evening")}
               />
-              <Moon size={16}/>Evening
+              <Moon size={16} className="ml-2"/>Evening
             </label>
             <label className='font-semibold text-purple-600 flex items-center'>
               <input
@@ -133,7 +131,7 @@ export function BookingFilterAccordion() {
                 checked={filters.departureTime === "night"}
                 onChange={() => handleDepartureTimeChange("night")}
               />
-              <Stars size={16}/>Night
+              <Stars size={16} className="ml-2"/>Night
             </label>
           </div>
         </AccordionContent>

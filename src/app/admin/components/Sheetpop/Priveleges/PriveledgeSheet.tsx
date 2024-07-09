@@ -19,15 +19,22 @@ function BusCompanySheet({ onAddSuccess }: { onAddSuccess: () => void }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [logoUrl, setLogoUrl] = useState('');
+  const [logoUrl, setLogoUrl] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setLogoUrl(file);
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!name || !email || !password) {
-      setError('Name, email, and password are required.');
+    if (!name || !email || !password || !logoUrl) {
+      setError('Name, email, password, and logo are required.');
       return;
     }
 
@@ -35,12 +42,15 @@ function BusCompanySheet({ onAddSuccess }: { onAddSuccess: () => void }) {
     setError(null);
 
     try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('logoUrl', logoUrl);
+
       const response = await fetch('/api/POST/busCompany', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password, logoUrl }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -112,13 +122,13 @@ function BusCompanySheet({ onAddSuccess }: { onAddSuccess: () => void }) {
             </div>
             <div className="grid grid-cols-1 items-center gap-4">
               <Label htmlFor="LogoUrl" className="text-left">
-                Logo URL
+                Logo
               </Label>
               <Input
                 id="LogoUrl"
-                placeholder="Logo URL"
-                value={logoUrl}
-                onChange={(e) => setLogoUrl(e.target.value)}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
                 className="col-span-3"
               />
             </div>

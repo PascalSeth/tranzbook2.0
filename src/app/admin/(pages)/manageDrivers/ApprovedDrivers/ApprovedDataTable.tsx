@@ -4,7 +4,6 @@ import * as React from "react"
 import {
   CaretSortIcon,
   ChevronDownIcon,
-  DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 import {
   ColumnDef,
@@ -20,17 +19,13 @@ import {
 } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -41,12 +36,10 @@ import {
 } from "@/components/ui/table"
 import ApprovedDriversSheet from "@/app/admin/components/Sheetpop/ManageDRIVERS/ApprovedDriverSheet"
 
-
-
 type ApprovedData = {
   firstName: string;
   lastName: string;
-  phone: string;
+  mobile: string;
   userType: number;
   email: string;
   createdAt: {
@@ -62,12 +55,11 @@ type ApprovedData = {
   status: string;
 };
 
-// Define table columns
 const columns: ColumnDef<ApprovedData>[] = [
   {
     accessorKey: "Sno",
     header: "Sno",
-    cell: ({ row }) => <div>{row.index + 1}</div>, // Use row index as Sno value
+    cell: ({ row }) => <div>{row.index + 1}</div>,
   },
   {
     accessorKey: "firstName",
@@ -97,21 +89,18 @@ const columns: ColumnDef<ApprovedData>[] = [
     cell: ({ row }) => <div>{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "phone",
+    accessorKey: "mobile",
     header: "Mobile",
-    cell: ({ row }) => <div>{row.getValue("phone")}</div>,
+    cell: ({ row }) => <div>{row.getValue("mobile")}</div>,
   },
-  {
-    accessorKey: "Rating",
-    header: "Rating",
-    // cell: ({ row }) => <div>{row.getValue("Rating")}</div>,
-  },
+
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => (
-      <div className={`${row.getValue("status") === 1 ? 'text-green-500' : 'text-red-500 file'} font-semibold`}>
-        {row.getValue("status") === 1 ? 'Active' : 'Inactive'}</div>
+      <div className={`${row.getValue("status") === 1 ? 'text-green-500' : 'text-red-500'} font-semibold`}>
+        {row.getValue("status") === 1 ? 'Active' : 'Inactive'}
+      </div>
     ),
   },
 ];
@@ -123,27 +112,26 @@ export function ApprovedDataTable() {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/lib/GET/Driver/getApprovedDrivers');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        if (Array.isArray(data.product)) {
-          setData(data.product);
-        } else {
-          setData([]); 
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // Handle error, e.g., set a default state or show an error message
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/api/GET/getDrivers');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
       }
-    };
+      const data = await response.json();
+      setData(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
+  React.useEffect(() => {
     fetchData();
   }, []);
+
+  const handleAddSuccess = () => {
+    fetchData();
+  };
 
   const table = useReactTable({
     data,
@@ -166,7 +154,7 @@ export function ApprovedDataTable() {
 
   return (
     <div className="w-full">
-      <ApprovedDriversSheet />
+      <ApprovedDriversSheet onAddSuccess={handleAddSuccess} />
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Name..."
@@ -186,20 +174,18 @@ export function ApprovedDataTable() {
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) =>
+                    column.toggleVisibility(!!value)
+                  }
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -208,18 +194,16 @@ export function ApprovedDataTable() {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -232,20 +216,14 @@ export function ApprovedDataTable() {
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>

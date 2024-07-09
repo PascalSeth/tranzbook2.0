@@ -70,11 +70,7 @@ const columns: ColumnDef<TripData & { startLocationName: string; endLocationName
     header: "Sr No",
     cell: ({ row }) => <div>{row.index + 1}</div>,
   },
-  {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => <div>{row.getValue("id")}</div>,
-  },
+
   {
     accessorKey: "date",
     header: "Date",
@@ -191,9 +187,9 @@ export function Trip() {
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by ID..."
-            value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
-            onChange={(event) => table.getColumn("id")?.setFilterValue(event.target.value)}
+            placeholder="Filter by Bus Type..."
+            value={(table.getColumn("busType")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => table.getColumn("busType")?.setFilterValue(event.target.value)}
             className="max-w-sm"
           />
           <DropdownMenu>
