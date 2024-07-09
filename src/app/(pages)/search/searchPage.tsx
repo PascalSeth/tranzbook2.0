@@ -1,5 +1,7 @@
-'use client'
-import React, { useState, useEffect, useCallback } from 'react';
+'use client';
+
+
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { CircularProgress } from '@mui/material'; // Import CircularProgress from Material-UI
 import { AccessTimeSharp, LocationOnSharp, PanoramaFishEyeSharp } from '@mui/icons-material';
 import FormBus from '@/components/FormBus';
@@ -58,6 +60,14 @@ type ExtendedTripData = TripData & {
 };
 
 const defaultLogoUrl = 'default-logo-url'; // Define a default logo URL
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<CircularProgress/>}>
+      <SearchResults />
+    </Suspense>
+  );
+}
 
 const SearchResults: React.FC = () => {
   const [results, setResults] = useState<ExtendedTripData[]>([]);
@@ -141,7 +151,6 @@ const SearchResults: React.FC = () => {
           formattedDate: new Date(trip.date).toLocaleDateString(),
           logoUrl,
         };
-
       });
 
       setResults(mappedResults);
@@ -159,7 +168,7 @@ const SearchResults: React.FC = () => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CircularProgress /> {/* Render a CircularProgress while loading */}
+        <CircularProgress /> 
       </div>
     );
   }
@@ -167,7 +176,9 @@ const SearchResults: React.FC = () => {
   if (error) {
     return <p>{error}</p>;
   }
+
   return (
+    <Suspense fallback={<CircularProgress/>}>
     <div>
       <div className="relative w-full overflow-hidden">
         <FormBus />
@@ -212,11 +223,10 @@ const SearchResults: React.FC = () => {
                   <div className='flex max-md:flex-col'>
                     <div className='flex w-full p-[2vh] justify-between'>
                       <div className='flex flex-col justify-between'>
-                      
                         <div className='sectiontop'>
-                        <div className='buspic'>
-                          <img className='w-full rounded-full h-24 object-fill' src={trip.logoUrl ? `https://dzviyoyyyopfsokiylmm.supabase.co/storage/v1/object/public/${trip.imageUrl}` : 'default-logo-url'} alt='' />
-                        </div>
+                          <div className='buspic'>
+                            <img className='w-full rounded-full h-24 object-fill' src={trip.logoUrl ? `https://dzviyoyyyopfsokiylmm.supabase.co/storage/v1/object/public/${trip.imageUrl}` : defaultLogoUrl} alt='' />
+                          </div>
                           <h2>
                             <PanoramaFishEyeSharp className='ic' />
                             {trip.startLocationName}
@@ -236,10 +246,10 @@ const SearchResults: React.FC = () => {
                         </div>
                       </div>
                       <div className='rightloca flex flex-col items-center justify-between'>
-                        <div className='flex items-center flex-col text-[2vh]'> 
-                           <div>
-                          <img className='w-full rounded-full h-8 object-fill' src={trip.logoUrl ? `https://dzviyoyyyopfsokiylmm.supabase.co/storage/v1/object/public/${trip.logoUrl}` : 'default-logo-url'} alt='' />
-                        </div>
+                        <div className='flex items-center flex-col text-[2vh]'>
+                          <div>
+                            <img className='w-full rounded-full h-8 object-fill' src={trip.logoUrl ? `https://dzviyoyyyopfsokiylmm.supabase.co/storage/v1/object/public/${trip.logoUrl}` : defaultLogoUrl} alt='' />
+                          </div>
                           <h2 className='font-semibold flex items-center text-[#48A0FF]'><Bus /> {trip.busType}</h2>
                         </div>
                         <h6 className='font-semibold'>GH₵{trip.price}</h6>
@@ -257,8 +267,6 @@ const SearchResults: React.FC = () => {
       ) : (
         <NoBusFound />
       )}
-    </div>
+    </div></Suspense>
   );
 };
-
-export default SearchResults;
